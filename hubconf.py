@@ -43,3 +43,27 @@ def gc_vit_tiny_in1k(pretrained=True, **kwargs):
 	transform = _transform(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 
 	return model, transform  
+
+def gc_vit_small_in1k(pretrained=True, **kwargs):
+	"""
+	Global Context Vision Transformer (GC ViT Small)
+	pretrained (bool): kwargs, load pretrained weights into the model
+	"""
+	model = _gc_vit.gc_vit_tiny()
+	if pretrained:
+		checkpoint_url = "https://visionlab-pretrainedmodels.s3.amazonaws.com/model_zoo/gcvit/gcvit_small_best-982ec226.pth.tar"
+		cache_file_name = "gcvit_small_best-982ec226.pth.tar"
+		checkpoint = torch.hub.load_state_dict_from_url(
+			url=checkpoint_url, 
+			map_location='cpu',
+			file_name=cache_file_name,
+			check_hash=True
+		)
+		state_dict = checkpoint['state_dict']
+		model.load_state_dict(state_dict, strict=True)
+		model.hashid = '982ec226'
+		model.weights_file = os.path.join(torch.hub.get_dir(), "checkpoints", cache_file_name)
+		
+	transform = _transform(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+
+	return model, transform  
