@@ -29,12 +29,13 @@ def gc_vit_tiny_in1k(pretrained=True, **kwargs):
 	if pretrained:
 		checkpoint_url = "https://visionlab-pretrainedmodels.s3.amazonaws.com/model_zoo/gcvit/gcvit_tiny_best-15a2241d.pth.tar"
 		cache_file_name = "gcvit_tiny_best-15a2241d.pth.tar"
-		state_dict = torch.hub.load_state_dict_from_url(
+		checkpoint = torch.hub.load_state_dict_from_url(
 			url=checkpoint_url, 
 			map_location='cpu',
 			file_name=cache_file_name,
 			check_hash=True
 		)
+		state_dict = checkpoint['state_dict']
 		model.load_state_dict(state_dict, strict=True)
 		model.hashid = '15a2241d'
 		model.weights_file = os.path.join(torch.hub.get_dir(), "checkpoints", cache_file_name)
