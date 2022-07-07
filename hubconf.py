@@ -49,7 +49,7 @@ def gc_vit_small_in1k(pretrained=True, **kwargs):
 	Global Context Vision Transformer (GC ViT Small)
 	pretrained (bool): kwargs, load pretrained weights into the model
 	"""
-	model = _gc_vit.gc_vit_tiny()
+	model = _gc_vit.gc_vit_small()
 	if pretrained:
 		checkpoint_url = "https://visionlab-pretrainedmodels.s3.amazonaws.com/model_zoo/gcvit/gcvit_small_best-982ec226.pth.tar"
 		cache_file_name = "gcvit_small_best-982ec226.pth.tar"
